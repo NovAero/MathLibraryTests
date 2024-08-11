@@ -126,12 +126,9 @@ namespace MathLibraryTests
                 7, 4, 5, 2);
 
             Matrix4 actual = m4a * m4b;
+            
+            Assert::AreEqual(Matrix4(43, 47, 43, 115, 53, 52, 53, 125, 66, 59, 66, 144, 38, 52, 38, 128),actual);
 
-            Assert::AreEqual(Matrix4(43, 47, 43, 115,
-                53, 52, 53, 125,
-                66, 59, 66, 144,
-                38, 52, 38, 128),
-                actual);
         }
         // make identity
         TEST_METHOD(MakeIdentity)

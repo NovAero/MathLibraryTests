@@ -94,6 +94,7 @@ namespace MathLibraryTests
 			Matrix3 m3d = m3a * m3c;
 
 			Assert::AreEqual(Matrix3(28, 28, 28, 33, 31, 33, 29, 31, 29), m3d);
+
 		}
 		// make identity
 		TEST_METHOD(MakeIdentity)
@@ -122,6 +123,7 @@ namespace MathLibraryTests
 			m3a = m3a.Transposed();
 
 			Assert::AreEqual(Matrix3(1, 4, 7, 2, 5, 8, 3, 6, 9), m3a);
+
 		}
 	};
 }

@@ -96,9 +96,8 @@ namespace MathClasses
 			translation += Vector4(x, y, z, 0);
 		}
 
-		bool Matrix4::operator==(const Matrix4& rhs)
-		{
-			return IsEqual(rhs);
+		friend bool operator==(Matrix4 rhs, Matrix4 lhs) {
+			return lhs.IsEqual(rhs);
 		}
 
 		bool Matrix4::operator!=(const Matrix4& rhs)
@@ -248,8 +247,8 @@ namespace MathClasses
 		//Param: r is radians
 		static Matrix4 MakeRotateZ(float r)
 		{
-			return Matrix4(cosf(r), -sinf(r), 0, 0, //xAxis
-				sinf(r), cosf(r), 0, 0, //yAxis
+			return Matrix4(cosf(r), sinf(r), 0, 0, //xAxis
+				-sinf(r), cosf(r), 0, 0, //yAxis
 				0, 0, 1, 0, //zAxis
 				0, 0, 0, 1);
 		}

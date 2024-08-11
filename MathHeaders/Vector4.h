@@ -1,5 +1,6 @@
 #pragma once
 #include "Helpers.h"
+#include <cmath>
 
 namespace MathClasses
 {
@@ -44,16 +45,17 @@ namespace MathClasses
 		{
 			Vector4 sum;
 
-			for (int i = 0; i < 4; ++i) {
-				sum[i] = sum[i] - rhs[i];
-			}
+			sum.x = (x - rhs.x);
+			sum.y = (y - rhs.y);
+			sum.z = (z - rhs.z);
+			sum.w = (w - rhs.w);
 
 			return sum;
 		}
 
 		Vector4 Vector4::operator*(float scale) const
 		{
-			return Vector4(x * scale, y * scale, z * scale, w);
+			return Vector4(x * scale, y * scale, z * scale, w * scale);
 		}
 
 		Vector4 Vector4::operator/(float scale) const
@@ -62,7 +64,7 @@ namespace MathClasses
 				throw std::runtime_error("Cannot divide by 0");
 			}
 
-			return Vector4(x / scale, y / scale, z / scale, w);
+			return Vector4(x / scale, y / scale, z / scale, w / scale);
 		}
 
 		bool Vector4::operator==(const Vector4& rhs) const
@@ -130,10 +132,10 @@ namespace MathClasses
 		}
 
 		void Vector4::Normalise() {
-			const float mag = SqrtF(x * x + y * y + z * z + w * w);
+			const float mag = Magnitude();
 
-			if (mag < constants::FLOAT_PRECISION) {
-				throw std::runtime_error("Its a zero!");
+			if (mag == 0) {
+				return;
 			}
 
 			x /= mag;
@@ -178,7 +180,7 @@ namespace MathClasses
 
 		friend Vector4 operator*(float lhs, Vector4 rhs)
 		{
-			return lhs * rhs;
+			return rhs * lhs;
 		}
 
 		friend float DotProduct(const Vector4& vec1, const Vector4& vec2)
@@ -194,6 +196,8 @@ namespace MathClasses
 
 			return a + b + c + d;
 		}
+		
 	};
 
+	
 }

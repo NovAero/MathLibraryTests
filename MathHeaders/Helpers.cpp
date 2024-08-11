@@ -1,9 +1,12 @@
 #include "Helpers.h"
 
-const double SqrtF(float n)
+const double SqrtF(double n)
 {
 	if (n == 0) {
 		return 0;
+	}
+	if (n == 1) {
+		return 1;
 	}
 	if (n < 0) {
 		n *= -1;
@@ -14,7 +17,7 @@ const double SqrtF(float n)
 	//temporary holder for division
 	double s = 0;
 	//Holds the value of n to be calculate against
-	float nt = n;
+	double nt = n;
 
 	//find a
 	for (int p = 1; p < n; p+=2) { //add 2 to p after every iteration
@@ -42,8 +45,15 @@ const double SqrtF(float n)
 
 	s = ((nt / a) + a) / 2; //Sets s to the average of (nt/a) + a
 
-	while ((s * s) >= n + 0.000001) {
+	while ((s * s) >= n + constants::FLOAT_PRECISION) {
 		s = ((nt/s) + s) / 2;
+	}
+
+	if (s == 0) {
+		return 0;
+	}
+	if (s < 0) {
+		s *= -1;
 	}
 
 	return s;

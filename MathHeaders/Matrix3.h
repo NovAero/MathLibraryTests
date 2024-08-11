@@ -68,9 +68,9 @@ namespace MathClasses
 			return const_cast<float*>(m);
 		}
 
-		bool Matrix3::operator==(const Matrix3& rhs)
+		friend bool Matrix3::operator==(Matrix3 rhs, Matrix3 lhs)
 		{
-			return IsEqual(rhs);
+			return lhs.IsEqual(rhs);
 		}
 
 		bool Matrix3::operator!=(const Matrix3& rhs)
@@ -83,7 +83,8 @@ namespace MathClasses
 			for (int i = 0; i < 9; ++i) {
 				if (m[i] - rhs[i] < precision) {
 					continue;
-				} else {
+				}
+				else {
 					return false;
 				}
 			}
@@ -167,7 +168,7 @@ namespace MathClasses
 			float mm[3][3];
 			Vector3 axis[3];
 		};
-	
+
 
 		static const Matrix3 MakeIdentity()
 		{
@@ -206,8 +207,8 @@ namespace MathClasses
 		//Param: r is radians
 		static Matrix3 MakeRotateZ(float r)
 		{
-			return Matrix3(cosf(r), -sinf(r), 0, //xAxis
-				sinf(r), cosf(r), 0, //yAxis
+			return Matrix3(cosf(r), sinf(r), 0, //xAxis
+				-sinf(r), cosf(r), 0, //yAxis
 				0, 0, 1);//zAxis
 		}
 
@@ -253,7 +254,5 @@ namespace MathClasses
 		static Matrix3 MakeTranslation(Vector3 dir) {
 			return MakeTranslation(dir.x, dir.y, dir.z);
 		}
-
-
 	};
 }

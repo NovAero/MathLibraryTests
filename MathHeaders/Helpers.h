@@ -10,4 +10,4 @@ namespace constants {
 
 }
 
-const double SqrtF(float n); // Gives you the square root of a number
+const double SqrtF(double n); // Gives you the square root of a number
