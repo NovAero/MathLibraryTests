@@ -6,31 +6,31 @@ namespace MathClasses
 	class Matrix3 {
 	public:
 
-		Matrix3::Matrix3()
+		Matrix3()
 		{
 			m00 = m01 = m02 = m10 = m11 = m12 = m20 = m21 = m22 = 0.0f;
 		}
 
-		Matrix3::Matrix3(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22)
+		Matrix3(float m00, float m10, float m20, float m01, float m11, float m21, float m02, float m12, float m22)
 		{
 			//X axis
 			this->m00 = m00;
-			this->m10 = m01;
-			this->m20 = m02;
+			this->m10 = m10;
+			this->m20 = m20;
 
 			//Y axis
-			this->m01 = m10;
+			this->m01 = m01;
 			this->m11 = m11;
-			this->m21 = m12;
+			this->m21 = m21;
 
 			//Z axis
-			this->m02 = m20;
-			this->m12 = m21;
+			this->m02 = m02;
+			this->m12 = m12;
 			this->m22 = m22;
 
 		}
 
-		Matrix3::Matrix3(float numbers[])
+		Matrix3(float numbers[])
 		{
 			for (int i = 0; i < 9; ++i) {
 				m[i] = numbers[i];
@@ -38,14 +38,14 @@ namespace MathClasses
 
 		}
 
-		Matrix3 Matrix3::Transposed() const
+		Matrix3 Transposed() const
 		{
 			return Matrix3(m00, m01, m02,
 				m10, m11, m12,
 				m20, m21, m22);
 		}
 
-		Vector3 Matrix3::GetRow(int index) const
+		Vector3 GetRow(int index) const
 		{
 			Vector3 vec;
 			switch (index)
@@ -63,22 +63,22 @@ namespace MathClasses
 			return vec;
 		}
 
-		Matrix3::operator float* () const
+		operator float* () const
 		{
 			return const_cast<float*>(m);
 		}
 
-		friend bool Matrix3::operator==(Matrix3 rhs, Matrix3 lhs)
+		bool operator==(const Matrix3& rhs)const
 		{
-			return lhs.IsEqual(rhs);
+			return IsEqual(rhs);
 		}
 
-		bool Matrix3::operator!=(const Matrix3& rhs)
+		bool operator!=(const Matrix3& rhs)
 		{
 			return !(*this == rhs);
 		}
 
-		bool Matrix3::IsEqual(Matrix3 rhs, float precision = constants::FLOAT_PRECISION)
+		bool IsEqual(const Matrix3& rhs, float precision = constants::FLOAT_PRECISION) const
 		{
 			for (int i = 0; i < 9; ++i) {
 				if (m[i] - rhs[i] < precision) {
@@ -91,7 +91,7 @@ namespace MathClasses
 			return true;
 		}
 
-		Matrix3 Matrix3::operator*(Matrix3 rhs) const
+		Matrix3 operator*(Matrix3 rhs) const
 		{
 			// stores the return value
 			Matrix3 result;
@@ -113,7 +113,7 @@ namespace MathClasses
 			return result;
 		}
 
-		Vector3 Matrix3::operator*(Vector3 rhs) const
+		Vector3 operator*(Vector3 rhs) const
 		{
 			return Vector3(
 				Vector3(m00, m01, m02).Dot(rhs),
@@ -122,17 +122,17 @@ namespace MathClasses
 			);
 		}
 
-		float& Matrix3::operator[](int dim)
+		float& operator[](int dim)
 		{
 			return m[dim];
 		}
 
-		const float& Matrix3::operator[](int dim) const
+		const float& operator[](int dim) const
 		{
 			return m[dim];
 		}
 
-		std::string Matrix3::ToString() const
+		std::string ToString() const
 		{
 			//make header
 			std::string str = ("|   x    |    y   |    z   |\n|--------|--------|--------| \n");

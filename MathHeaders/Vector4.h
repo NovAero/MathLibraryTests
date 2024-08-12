@@ -9,27 +9,27 @@ namespace MathClasses
 	{
 	public:
 
-		Vector4::Vector4() : Vector4{ 0 }
+		Vector4() : Vector4{ 0 }
 		{
 		
 		}
 
-		Vector4::Vector4(const float x, const float y, const float z, const float w) : x{ x }, y{ y }, z{ z }, w{ w }
+		Vector4(const float x, const float y, const float z, const float w) : x{ x }, y{ y }, z{ z }, w{ w }
 		{
 		}
 
-		Vector4::Vector4(const float value) : x{ value }, y{ value }, z{ value }, w{ value }
+		Vector4(const float value) : x{ value }, y{ value }, z{ value }, w{ value }
 		{
 		}
 
 	public:
 
-		Vector4::operator float* () const
+		operator float* () const
 		{
 			return const_cast<float*>(data);
 		}
 
-		Vector4 Vector4::operator+(Vector4 rhs) const
+		Vector4 operator+(Vector4 rhs) const
 		{
 			Vector4 sum;
 
@@ -41,7 +41,7 @@ namespace MathClasses
 			return sum;
 		}
 
-		Vector4 Vector4::operator-(const Vector4 rhs) const
+		Vector4 operator-(const Vector4 rhs) const
 		{
 			Vector4 sum;
 
@@ -53,12 +53,12 @@ namespace MathClasses
 			return sum;
 		}
 
-		Vector4 Vector4::operator*(float scale) const
+		Vector4 operator*(float scale) const
 		{
 			return Vector4(x * scale, y * scale, z * scale, w * scale);
 		}
 
-		Vector4 Vector4::operator/(float scale) const
+		Vector4 operator/(float scale) const
 		{
 			if (scale == 0) {
 				throw std::runtime_error("Cannot divide by 0");
@@ -67,17 +67,17 @@ namespace MathClasses
 			return Vector4(x / scale, y / scale, z / scale, w / scale);
 		}
 
-		bool Vector4::operator==(const Vector4& rhs) const
+		bool operator==(const Vector4& rhs) const
 		{
 			return IsEqual(rhs);
 		}
 
-		bool Vector4::operator!=(const Vector4& rhs) const
+		bool operator!=(const Vector4& rhs) const
 		{
 			return !(*this == rhs);
 		}
 
-		bool Vector4::IsEqual(Vector4 rhs, float precision = constants::FLOAT_PRECISION) const
+		bool IsEqual(Vector4 rhs, float precision = constants::FLOAT_PRECISION) const
 		{
 			float xDist = fabsf(x - rhs.x);
 			float yDist = fabsf(y - rhs.y);
@@ -90,7 +90,7 @@ namespace MathClasses
 				wDist < precision;
 		}
 
-		Vector4& Vector4::operator+=(const Vector4& other)
+		Vector4& operator+=(const Vector4& other)
 		{
 			x += other.x;
 			y += other.y;
@@ -99,7 +99,7 @@ namespace MathClasses
 			return *this;
 		}
 
-		Vector4& Vector4::operator-=(const Vector4& other)
+		Vector4& operator-=(const Vector4& other)
 		{
 			x -= other.x;
 			y -= other.y;
@@ -108,7 +108,7 @@ namespace MathClasses
 			return *this;
 		}
 
-		Vector4& Vector4::operator*=(float& scalar)
+		Vector4& operator*=(float& scalar)
 		{
 			x *= scalar;
 			y *= scalar;
@@ -117,21 +117,21 @@ namespace MathClasses
 			return *this;
 		}
 
-		float& Vector4::operator[](int index)
+		float& operator[](int index)
 		{
 			return data[index];
 		}
 
-		float Vector4::operator[](const int index) const
+		float operator[](const int index) const
 		{
 			return data[index];
 		}
 
-		float Vector4::Magnitude() const {
+		float Magnitude() const {
 			return SqrtF(x * x + y * y + z * z + w * w);
 		}
 
-		void Vector4::Normalise() {
+		void Normalise() {
 			const float mag = Magnitude();
 
 			if (mag == 0) {
@@ -144,17 +144,17 @@ namespace MathClasses
 			w /= mag;
 		}
 
-		Vector4 Vector4::Normalised() {
+		Vector4 Normalised() {
 			Vector4 copy = *this;
 			copy.Normalise();
 			return copy;
 		}
 
-		float Vector4::Dot(const Vector4& other) const {
+		float Dot(const Vector4& other) const {
 			return x * other.x + y * other.y + z * other.z + w * other.w;
 		}
 
-		Vector4 Vector4::Cross(const Vector4& rhs) const
+		Vector4 Cross(const Vector4& rhs) const
 		{
 			float a, b, c;
 			a = (y * rhs.z) - (z * rhs.y);
@@ -165,7 +165,7 @@ namespace MathClasses
 		}
 
 
-		std::string Vector4::ToString() const
+		std::string ToString() const
 		{
 			return std::string(std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z) + ", " + std::to_string(w));
 		}

@@ -7,9 +7,9 @@ namespace MathClasses
 	{
 	public:
 
-        Colour::Colour() : colour{ 0x000000ff } {}
+        Colour() : colour{ 0x000000ff } {}
 
-        Colour::Colour(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+        Colour(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
         {
             colour = colour & 0x000000ff
                 | ((unsigned int)r << RED)
@@ -18,63 +18,63 @@ namespace MathClasses
                 | ((unsigned int)a << ALPHA);
         }
 
-        bool Colour::IsEqual(Colour rhs) {
+        bool IsEqual(const Colour& rhs) const {
 
 
             return (colour == rhs.colour);
 
         }
 
-        bool Colour::operator==(const Colour& rhs)
+        bool operator==(const Colour& rhs) const
         {
             return IsEqual(rhs);
         }
 
-        bool Colour::operator!=(const Colour& rhs)
+        bool operator!=(const Colour& rhs) const
         {
             return !(*this == rhs);
         }
 
-        unsigned char Colour::GetRed() const
+        unsigned char GetRed() const
         {
             return colour >> 24;
         }
 
-        unsigned char Colour::GetGreen() const
+        unsigned char GetGreen() const
         {
             return colour >> 16;
         }
 
-        unsigned char Colour::GetBlue() const
+        unsigned char GetBlue() const
         {
             return colour >> 8;
         }
 
-        unsigned char Colour::GetAlpha() const
+        unsigned char GetAlpha() const
         {
             return colour;
         }
 
-        void Colour::SetRed(unsigned char red)
+        void SetRed(unsigned char red)
         {
             unsigned int v = (unsigned int)red << RED;
             colour = colour & 0x00ffffff | v;
         }
 
-        void Colour::SetGreen(unsigned char green)
+        void SetGreen(unsigned char green)
         {
             unsigned int v = (unsigned int)green << GREEN;
             colour = colour & 0xff00ffff | v;
         }
 
-        void Colour::SetBlue(unsigned char blue)
+        void SetBlue(unsigned char blue)
         {
             unsigned int v = (unsigned int)blue << BLUE;
             colour = colour & 0xffff00ff | v;
 
         }
 
-        void Colour::SetAlpha(unsigned char alpha)
+        void SetAlpha(unsigned char alpha)
         {
             unsigned int v = (unsigned int)alpha;
             colour = colour & 0xffffff00 | v;

@@ -7,41 +7,41 @@ namespace MathClasses
 	class Matrix4 {
 	public:
 
-		Matrix4::Matrix4()
+		Matrix4()
 		{
 			for (int i = 0; i < 16; ++i) {
 				m[i] = 0.0f;
 			}
 		}
 
-		Matrix4::Matrix4(float m00, float m01, float m02, float m03, float m10, float m11, float m12, float m13, float m20, float m21, float m22, float m23, float m30, float m31, float m32, float m33)
+		Matrix4(float m00, float m10, float m20, float m30, float m01, float m11, float m21, float m31, float m02, float m12, float m22, float m32, float m03, float m13, float m23, float m33)
 		{
 			//X axis
 			this->m00 = m00;
-			this->m10 = m01;
-			this->m20 = m02;
-			this->m30 = m03;
+			this->m10 = m10;
+			this->m20 = m20;
+			this->m30 = m30;
 
 			//Y axis
-			this->m01 = m10;
+			this->m01 = m01;
 			this->m11 = m11;
-			this->m21 = m12;
-			this->m31 = m13;
+			this->m21 = m21;
+			this->m31 = m31;
 
 			//Z axis
-			this->m02 = m20;
-			this->m12 = m21;
+			this->m02 = m02;
+			this->m12 = m12;
 			this->m22 = m22;
-			this->m32 = m23;
+			this->m32 = m32;
 
 			//local pos
-			this->m03 = m30;
-			this->m13 = m31;
-			this->m23 = m32;
+			this->m03 = m03;
+			this->m13 = m13;
+			this->m23 = m23;
 			this->m33 = m33;
 		}
 
-		Matrix4::Matrix4(float numbers[])
+		Matrix4(float numbers[])
 		{
 			for (int i = 0; i < 16; ++i) {
 				m[i] = numbers[i];
@@ -49,12 +49,12 @@ namespace MathClasses
 
 		}
 
-		Matrix4::operator float* () const
+		operator float* () const
 		{
 			return const_cast<float*>(m);
 		}
 
-		Vector4 Matrix4::GetRow(int index) const
+		Vector4 GetRow(int index) const
 		{
 			Vector4 vec;
 			switch (index)
@@ -75,7 +75,7 @@ namespace MathClasses
 			return vec;
 		}
 
-		void Matrix4::SetScaled(float x, float y, float z) {
+		void SetScaled(float x, float y, float z) {
 			// set scale of each axis
 			xAxis = { x, 0, 0, 0 };
 			yAxis = { 0, y, 0, 0 };
@@ -83,7 +83,7 @@ namespace MathClasses
 			translation = { 0, 0, 0, 1 };
 		}
 
-		void Matrix4::SetRotateX(float radians) {
+		void SetRotateX(float radians) {
 			// leave X axis and elements unchanged
 			xAxis = { 1, 0, 0, 0 };
 			yAxis = { 0, cosf(radians), sinf(radians), 0 };
@@ -91,21 +91,21 @@ namespace MathClasses
 			translation = { 0, 0, 0, 1 };
 		}
 
-		void Matrix4::Translate(float x, float y, float z) {
+		void Translate(float x, float y, float z) {
 			// apply vector offset
 			translation += Vector4(x, y, z, 0);
 		}
 
-		friend bool operator==(Matrix4 rhs, Matrix4 lhs) {
-			return lhs.IsEqual(rhs);
+		bool operator==(const Matrix4& rhs) const {
+			return IsEqual(rhs);
 		}
 
-		bool Matrix4::operator!=(const Matrix4& rhs)
+		bool operator!=(const Matrix4& rhs) const
 		{
 			return !(*this == rhs);
 		}
 
-		bool Matrix4::IsEqual(Matrix4 rhs, float precision = constants::FLOAT_PRECISION)
+		bool IsEqual(const Matrix4& rhs, const float precision = constants::FLOAT_PRECISION) const
 		{
 			return (xAxis.IsEqual(rhs.xAxis, precision) &&
 				yAxis.IsEqual(rhs.yAxis, precision) &&
@@ -114,7 +114,7 @@ namespace MathClasses
 		}
 
 		// binary * operator
-		Vector4 Matrix4::operator * (const Vector4& v) const {
+		Vector4 operator * (const Vector4& v) const {
 			Vector4 result;
 
 			result[0] = mm[0][0] * v[0] + mm[1][0] * v[1] +
@@ -132,7 +132,7 @@ namespace MathClasses
 		}
 
 		// binary * operator
-		Matrix4 Matrix4::operator*(const Matrix4& other) const {
+		Matrix4 operator*(const Matrix4& other) const {
 			Matrix4 result;
 
 			for (int r = 0; r < 4; ++r) {
@@ -147,17 +147,17 @@ namespace MathClasses
 			return result;
 		}
 
-		float& Matrix4::operator[](int dim)
+		float& operator[](int dim)
 		{
 			return m[dim];
 		}
 
-		const float& Matrix4::operator[](int dim) const
+		const float& operator[](int dim) const
 		{
 			return m[dim];
 		}
 
-		std::string Matrix4::ToString() const
+		std::string ToString() const
 		{
 			//make header
 			std::string str = ("|   x    |    y   |    z   |    T   |\n|--------|--------|--------|--------| \n");

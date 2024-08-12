@@ -7,33 +7,33 @@ namespace MathClasses
 	{
 	public:
 
-		Vector3::Vector3() : Vector3{ 0 }
+		Vector3() : Vector3{ 0 }
 		{
 		}
-		Vector3::Vector3(const float x, const float y, const float z) : x{ x }, y{ y }, z{ z }
+		Vector3(const float x, const float y, const float z) : x{ x }, y{ y }, z{ z }
 		{
 		}
-		Vector3::Vector3(const float value) : x{ value }, y{ value }, z(value)
+		Vector3(const float value) : x{ value }, y{ value }, z(value)
 		{
 		}
 
 	public:
 
-		Vector3::operator float*() const
+		operator float*() const
 		{
 			return const_cast<float*>(data);
 		}
 
-		float& Vector3::operator[](int index)
+		float& operator[](int index)
 		{
 			return data[index];
 		}
-		const float& Vector3::operator[](int index) const
+		const float& operator[](int index) const
 		{
 			return data[index];
 		}
 
-		Vector3 Vector3::operator+(Vector3 rhs) const
+		Vector3 operator+(Vector3 rhs) const
 		{
 			Vector3 sum;
 			
@@ -44,7 +44,7 @@ namespace MathClasses
 			return sum;
 		}
 
-		Vector3 Vector3::operator+=(const Vector3 rhs)
+		Vector3 operator+=(const Vector3 rhs)
 		{
 
 			for (int i = 0; i < 3; ++i) {
@@ -54,7 +54,7 @@ namespace MathClasses
 			return *this;
 		}
 
-		Vector3 Vector3::operator-(Vector3 rhs) const
+		Vector3 operator-(const Vector3 rhs) const
 		{
 			Vector3 sum;
 
@@ -65,7 +65,7 @@ namespace MathClasses
 			return sum;
 		}
 
-		Vector3 Vector3::operator-=(const Vector3 rhs)
+		Vector3 operator-=(const Vector3 rhs)
 		{
 			for (int i = 0; i < 3; ++i) {
 				data[i] = data[i] - rhs[i];
@@ -74,12 +74,12 @@ namespace MathClasses
 			return *this;
 		}
 
-		Vector3 Vector3::operator*(float scale) const
+		Vector3 operator*(float scale) const
 		{
 			return Vector3(x * scale, y * scale, z * scale);
 		}
 
-		Vector3 Vector3::operator/(float scale) const
+		Vector3 operator/(float scale) const
 		{
 			if (scale == 0) {
 				throw std::runtime_error("Cannot divide by 0");
@@ -88,15 +88,15 @@ namespace MathClasses
 			return Vector3(x / scale, y / scale, z / scale);
 		}
 
-		bool Vector3::operator==(const Vector3 rhs) const
+		bool operator==(const Vector3 rhs) const
 		{
 			return IsEqual(rhs);
 		}
-		bool Vector3::operator!=(const Vector3 rhs) const
+		bool operator!=(const Vector3 rhs) const
 		{
 			return !(*this == rhs);
 		}
-		bool Vector3::IsEqual(Vector3 rhs, float precision = constants::FLOAT_PRECISION) const
+		bool IsEqual(const Vector3& rhs, float precision = constants::FLOAT_PRECISION) const
 		{
 			float xDist = fabsf(x - rhs.x);
 			float yDist = fabsf(y - rhs.y);
@@ -107,16 +107,16 @@ namespace MathClasses
 				zDist < precision;
 		}
 
-		float Vector3::Dot(const Vector3& rhs)
+		float Dot(const Vector3& rhs) const
 		{
 			return ((x * rhs.x) + (y * rhs.y) + (z * rhs.z));
 		}
-		float Vector3::Dot(float rhsX, float rhsY, float rhsZ)
+		float Dot(float rhsX, float rhsY, float rhsZ) const
 		{
 			return ((x * rhsX) + (y * rhsY) + (z * rhsZ));
 		}
 
-		Vector3 Vector3::Cross(const Vector3& rhs)
+		Vector3 Cross(const Vector3& rhs) const
 		{
 			float a, b, c;
 			a = (y * rhs.z) - (z * rhs.y);
@@ -126,17 +126,17 @@ namespace MathClasses
 			return Vector3(a, b, c);
 		}
 
-		float Vector3::Magnitude() const
+		float Magnitude() const
 		{
 			return SqrtF(MagnitudeSqr());
 		}
 
-		float Vector3::MagnitudeSqr() const
+		float MagnitudeSqr() const
 		{
 			return x * x + y * y + z * z;
 		}
 
-		void Vector3::Normalise()
+		void Normalise()
 		{
 
 			float m = Magnitude();
@@ -151,19 +151,19 @@ namespace MathClasses
 
 		}
 
-		Vector3 Vector3::Normalised() const
+		Vector3 Normalised() const
 		{
 			Vector3 copy = *this;
 			copy.Normalise();
 			return copy;
 		}
 
-		float Vector3::Distance(const Vector3& other) const
+		float Distance(const Vector3& other) const
 		{
 			return (*this - other).Magnitude();
 		}
 
-		std::string Vector3::ToString() const
+		std::string ToString() const
 		{
 			return (std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z));
 		}
@@ -176,9 +176,9 @@ namespace MathClasses
 			float data[3];
 		};
 
-		friend Vector3 operator*(float lhs, Vector3 rhs)
+		friend Vector3 operator*(float lhs, const Vector3& rhs)
 		{
-			return lhs * rhs;
+			return rhs*lhs;
 		}
 		friend float DotProduct(const Vector3& vec1, const Vector3& vec2)
 		{
