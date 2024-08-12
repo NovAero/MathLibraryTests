@@ -25,9 +25,9 @@ namespace MathClasses
 
         }
 
-        bool Colour::operator==(const Colour& rhs)
+        friend bool Colour::operator==(Colour lhs, const Colour& rhs)
         {
-            return IsEqual(rhs);
+            return lhs.IsEqual(rhs);
         }
 
         bool Colour::operator!=(const Colour& rhs)

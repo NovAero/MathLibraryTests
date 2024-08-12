@@ -95,5 +95,15 @@ namespace MathLibraryTests
 			auto alpha = actual.GetAlpha();
 			Assert::AreEqual(alpha, (Byte)255);
 		}
+		//Task 2 Tests
+		TEST_METHOD(ShiftRtG) {
+
+			Colour actual(255, 0, 0, 0);
+
+			actual.colour = actual.colour >> 8;
+
+			Assert::AreEqual(Colour(0, 255, 0, 0), actual);
+
+		}
 	};
 }
