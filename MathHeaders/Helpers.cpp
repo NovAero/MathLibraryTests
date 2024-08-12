@@ -1,5 +1,10 @@
 #include "Helpers.h"
 
+
+const float  constants::FLOAT_PRECISION = 0.0001f;
+const double constants::PI = 3.14159265358979;
+
+
 const double SqrtF(double n)
 {
 	if (n == 0) {

@@ -5,8 +5,8 @@
 
 namespace constants {
 
-	const float FLOAT_PRECISION = 0.0001f;
-	const double PI = 3.14159265358979;
+	extern const float FLOAT_PRECISION;
+	extern const double PI;
 
 }
 
